@@ -161,7 +161,7 @@ def training_loop(train_dataloader, opts):
 
             # FILL THIS IN
             # 1. Compute the discriminator loss on real images
-            D_real_loss = F.mse_loss(D(real_images), Variable(torch.ones(batch_size)))
+            D_real_loss = F.mse_loss(D(real_images), Variable(torch.ones(labels.size(0))))
 
             # 2. Sample noise
             noise = sample_noise(opts.noise_size)
