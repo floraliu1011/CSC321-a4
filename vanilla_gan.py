@@ -221,7 +221,7 @@ def training_loop(train_dataloader, opts):
                 save_samples(G, fixed_noise, iteration, opts)
             
             #delete this line later!!!
-            if G_loss.data < min_G_loss:
+            if G_loss.data[0] < min_G_loss:
                 save_samples_low_loss(G, fixed_noise, iteration, opts)
                 print('Iteration [{:4d}/{:4d}] | D_real_loss: {:6.4f} | D_fake_loss: {:6.4f} | G_loss: {:6.4f}'.format(
                        iteration, total_train_iters, D_real_loss.data[0], D_fake_loss.data[0], G_loss.data[0]))
