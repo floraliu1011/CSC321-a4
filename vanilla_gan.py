@@ -23,6 +23,7 @@ import scipy.misc
 # Torch imports
 import torch
 import torch.nn as nn
+import torch.nn.functional as F
 import torch.optim as optim
 
 # Local imports
@@ -159,19 +160,19 @@ def training_loop(train_dataloader, opts):
 
             # FILL THIS IN
             # 1. Compute the discriminator loss on real images
-            # D_real_loss = ...
+            D_real_loss = F.mse_loss(D(real_images), torch.ones(batch_size))
 
             # 2. Sample noise
-            # noise = ...
+            noise = sample_noise(opts.noise_size)
 
             # 3. Generate fake images from the noise
-            # fake_images = ...
+            fake_images = G(noise)
 
             # 4. Compute the discriminator loss on the fake images
-            # d_fake_loss = ...
+            D_fake_loss = F.mse_loss(D(fake_images), torch.zeros(batch_size))
 
             # 5. Compute the total discriminator loss
-            # d_total_loss = ...
+            D_total_loss = D_real_loss + D_fake_loss
 
             D_total_loss.backward()
             d_optimizer.step()
@@ -184,13 +185,13 @@ def training_loop(train_dataloader, opts):
 
             # FILL THIS IN
             # 1. Sample noise
-            # noise = ...
+            noise = sample_noise(opts.noise_size)
 
             # 2. Generate fake images from the noise
-            # fake_images = ...
+            fake_images = G(noise)
 
             # 3. Compute the generator loss
-            # g_loss = ...
+            G_loss = F.mse_loss(D(fake_images), torch.ones(batch_size))
 
             G_loss.backward()
             g_optimizer.step()
