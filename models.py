@@ -140,7 +140,7 @@ class DCDiscriminator(nn.Module):
         self.conv1 = conv(3, 64, 4)
         self.conv2 = conv(64, 128, 4)
         self.conv3 = conv(128, 256, 4)
-        self.conv4 = conv(256, 1, 4)
+        self.conv4 = conv(256, 1, 4, padding = 0)
 
     def forward(self, x):
 
