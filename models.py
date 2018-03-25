@@ -48,9 +48,9 @@ class DCGenerator(nn.Module):
         ###########################################
         ##   FILL THIS IN: CREATE ARCHITECTURE   ##
         ###########################################
-        self.deconv1 = deconv(100, 128, 4, padding=0, batch_norm = False)
-        self.deconv2 = deconv(128, 64, 4, batch_norm = False)
-        self.deconv3 = deconv(64, 32, 4, batch_norm = False)
+        self.deconv1 = deconv(100, 128, 4, padding=0)
+        self.deconv2 = deconv(128, 64, 4)
+        self.deconv3 = deconv(64, 32, 4)
         self.deconv4 = deconv(32, 3, 4, batch_norm = False)
 
     def forward(self, z):
