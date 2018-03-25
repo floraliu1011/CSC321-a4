@@ -168,7 +168,7 @@ def training_loop(train_dataloader, opts):
 
             # 3. Generate fake images from the noise
             fake_images = G(noise)
-
+            
             # 4. Compute the discriminator loss on the fake images
             D_fake_loss = F.mse_loss(D(fake_images), Variable(torch.zeros(batch_size)))
 
@@ -190,7 +190,7 @@ def training_loop(train_dataloader, opts):
 
             # 2. Generate fake images from the noise
             fake_images = G(noise)
-
+            
             # 3. Compute the generator loss
             G_loss = F.mse_loss(D(fake_images), Variable(torch.ones(batch_size)))
 
