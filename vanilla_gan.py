@@ -243,6 +243,7 @@ def main(opts):
     # Create checkpoint and sample directories
     utils.create_dir(opts.checkpoint_dir)
     utils.create_dir(opts.sample_dir)
+    utils.create_dir(opts.sample_dir + '/low_loss')
 
     training_loop(train_dataloader, opts)
 
