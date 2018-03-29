@@ -94,15 +94,15 @@ class CycleGenerator(nn.Module):
         ###########################################
 
         # 1. Define the encoder part of the generator (that extracts features from the input image)
-        # self.conv1 = conv(...)
-        # self.conv2 = conv(...)
+        self.conv1 = conv(3, 32)
+        self.conv2 = conv(32, 64)
 
         # 2. Define the transformation part of the generator
-        # self.resnet_block = ...
+        self.resnet_block = ResnetBlock(64)
 
         # 3. Define the decoder part of the generator (that builds up the output image from features)
-        # self.deconv1 = deconv(...)
-        # self.deconv2 = deconv(...)
+        self.deconv1 = deconv(64, 32)
+        self.deconv2 = deconv(32, 3, batch_norm = False)
 
     def forward(self, x):
         """Generates an image conditioned on an input image.
@@ -137,10 +137,10 @@ class DCDiscriminator(nn.Module):
         ###########################################
         ##   FILL THIS IN: CREATE ARCHITECTURE   ##
         ###########################################
-        self.conv1 = conv(3, 64, 4)
-        self.conv2 = conv(64, 128, 4)
-        self.conv3 = conv(128, 256, 4)
-        self.conv4 = conv(256, 1, 4, padding = 0, batch_norm = False)
+        self.conv1 = conv(3, 32, 4)
+        self.conv2 = conv(32, 64, 4)
+        self.conv3 = conv(64, 128, 4)
+        self.conv4 = conv(128, 1, 4, padding = 0, batch_norm = False)
 
     def forward(self, x):
 
