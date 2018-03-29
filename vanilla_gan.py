@@ -109,17 +109,6 @@ def save_samples(G, fixed_noise, iteration, opts):
     path = os.path.join(opts.sample_dir, 'sample-{:06d}.png'.format(iteration))
     scipy.misc.imsave(path, grid)
     print('Saved {}'.format(path))
-
-def save_samples_low_loss(G, fixed_noise, iteration, opts):
-    generated_images = G(fixed_noise)
-    generated_images = utils.to_data(generated_images)
-
-    grid = create_image_grid(generated_images)
-
-    # merged = merge_images(X, fake_Y, opts)
-    path = os.path.join(opts.sample_dir, '/low_loss/sample-{:06d}.png'.format(iteration))
-    scipy.misc.imsave(path, grid)
-    print('Saved {}'.format(path))
     
 def sample_noise(dim):
     """
@@ -156,9 +145,6 @@ def training_loop(train_dataloader, opts):
 
     total_train_iters = opts.num_epochs * len(train_dataloader)
     
-    # TODO: delete this line later
-    
-    min_G_loss = 1
     for epoch in range(opts.num_epochs):
 
         for batch in train_dataloader:
@@ -193,7 +179,7 @@ def training_loop(train_dataloader, opts):
 
             ###########################################
             ###          TRAIN THE GENERATOR        ###
-            ###########################################
+            ########o###################################
 
             g_optimizer.zero_grad()
 
@@ -219,14 +205,7 @@ def training_loop(train_dataloader, opts):
             # Save the generated samples
             if iteration % opts.sample_every == 0:
                 save_samples(G, fixed_noise, iteration, opts)
-            
-            #delete this line later!!!
-            if iteration > 10 and G_loss.data[0] < min_G_loss:
-		min_G_loss = G_loss.data[0]
-                save_samples(G, fixed_noise, iteration, opts)
-                print('Iteration [{:4d}/{:4d}] | D_real_loss: {:6.4f} | D_fake_loss: {:6.4f} | G_loss: {:6.4f}'.format(
-                       iteration, total_train_iters, D_real_loss.data[0], D_fake_loss.data[0], G_loss.data[0]))
-
+        
             # Save the model parameters
             if iteration % opts.checkpoint_every == 0:
                 checkpoint(iteration, G, D, opts)
