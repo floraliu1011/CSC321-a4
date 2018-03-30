@@ -65,10 +65,10 @@ class DCGenerator(nn.Module):
                 out: BS x channels x image_width x image_height  -->  16x3x32x32
         """
 
-        out = F.relu(self.deconv1(z))    # BS x 128 x 4 x 4
-        out = F.relu(self.deconv2(out))  # BS x 64 x 8 x 8
-        out = F.relu(self.deconv3(out))  # BS x 32 x 16 x 16
-        out = F.tanh(self.deconv4(out))  # BS x 3 x 32 x 32
+        out = F.relu(self.deconv1(z))
+        out = F.relu(self.deconv2(out))
+        out = F.relu(self.deconv3(out))
+        out = F.tanh(self.deconv4(out))
         return out
 
 
@@ -116,13 +116,13 @@ class CycleGenerator(nn.Module):
                 out: BS x 3 x 32 x 32
         """
 
-        out = F.relu(self.conv1(x))            # BS x 32 x 16 x 16
-        out = F.relu(self.conv2(out))          # BS x 64 x 8 x 8
+        out = F.relu(self.conv1(x))
+        out = F.relu(self.conv2(out))
 
-        out = F.relu(self.resnet_block(out))   # BS x 64 x 8 x 8
+        out = F.relu(self.resnet_block(out))
 
-        out = F.relu(self.deconv1(out))        # BS x 32 x 16 x 16
-        out = F.tanh(self.deconv2(out))        # BS x 3 x 32 x 32
+        out = F.relu(self.deconv1(out))
+        out = F.tanh(self.deconv2(out))
 
         return out
 
@@ -144,9 +144,9 @@ class DCDiscriminator(nn.Module):
 
     def forward(self, x):
 
-        out = F.relu(self.conv1(x))    # BS x 64 x 16 x 16
-        out = F.relu(self.conv2(out))  # BS x 128 x 8 x 8
-        out = F.relu(self.conv3(out))  # BS x 256 x 4 x 4
+        out = F.relu(self.conv1(x))
+        out = F.relu(self.conv2(out))
+        out = F.relu(self.conv3(out))
 
         out = self.conv4(out).squeeze()
         out = F.sigmoid(out)

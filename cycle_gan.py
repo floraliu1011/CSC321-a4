@@ -28,8 +28,8 @@ warnings.filterwarnings("ignore")
 # Torch imports
 import torch
 import torch.nn as nn
-import torch.nn.functional as F
 import torch.optim as optim
+import torch.nn.functional as F
 from torch.autograd import Variable
 
 # Numpy & Scipy imports
@@ -205,7 +205,7 @@ def training_loop(dataloader_X, dataloader_Y, test_dataloader_X, test_dataloader
     fixed_Y = utils.to_var(test_iter_Y.next()[0])
 
     iter_per_epoch = min(len(iter_X), len(iter_Y))
-    
+
     for iteration in range(1, opts.train_iters+1):
 
         # Reset data_iter for each epoch
@@ -218,7 +218,8 @@ def training_loop(dataloader_X, dataloader_Y, test_dataloader_X, test_dataloader
 
         images_Y, labels_Y = iter_Y.next()
         images_Y, labels_Y = utils.to_var(images_Y), utils.to_var(labels_Y).long().squeeze()
-        
+
+
         x_size = labels_X.size(0)
         y_size = labels_Y.size(0)
         
