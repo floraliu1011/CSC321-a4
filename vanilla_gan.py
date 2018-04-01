@@ -156,11 +156,12 @@ def training_loop(train_dataloader, opts):
             ###         TRAIN THE DISCRIMINATOR         ####
             ################################################
             img_ones = Variable(torch.ones(labels.size(0)))
-            img_zeros = Variable(torch.zeros(labels.size(0)))
+	    batch_zeros = Variable(torch.zeros(batch_size))
+	    batch_ones = Variable(torch.ones(batch_size))
             if torch.cuda.is_available():
                 img_ones = img_ones.cuda()
-                img_zeros = img_zeros.cuda()
-                
+		batch_zeros = batch_zeros.cuda()
+                batch_ones = batch_ones.cuda()
             d_optimizer.zero_grad()
 
             # FILL THIS IN
@@ -174,7 +175,7 @@ def training_loop(train_dataloader, opts):
             fake_images = G(noise)
             
             # 4. Compute the discriminator loss on the fake images
-            D_fake_loss = F.mse_loss(D(fake_images), img_zeros)
+            D_fake_loss = F.mse_loss(D(fake_images), batch_zeros)
 
             # 5. Compute the total discriminator loss
             D_total_loss = D_real_loss + D_fake_loss
@@ -196,7 +197,7 @@ def training_loop(train_dataloader, opts):
             fake_images = G(noise)
             
             # 3. Compute the generator loss
-            G_loss = F.mse_loss(D(fake_images), img_ones)
+            G_loss = F.mse_loss(D(fake_images), batch_ones)
 
             G_loss.backward()
             g_optimizer.step()
